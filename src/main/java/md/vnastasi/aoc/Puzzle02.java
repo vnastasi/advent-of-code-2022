@@ -1,18 +1,12 @@
 package md.vnastasi.aoc;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class Puzzle02 {
 
-    private void run() throws URISyntaxException, IOException {
-        URL resource = Puzzle02.class.getClassLoader().getResource("input_02.txt");
-        var lines = Files.readAllLines(Path.of(resource.toURI()));
-
+    private void run() {
+        var lines = Inputs.readLines("input_02.txt");
         partOne(lines);
         partTwo(lines);
     }
@@ -37,9 +31,8 @@ public class Puzzle02 {
         );
 
         var totalScore = lines.stream()
-                .map(it -> it.split(" "))
-                .map(it -> new Game(it[0], it[1]))
-                .mapToInt(it -> gameMap.get(it).score + shapeMap.get(it.second()).score)
+                .map(Game::fromString)
+                .mapToInt(it -> gameMap.get(it).score + shapeMap.get(it.ownMove()).score)
                 .sum();
 
         System.out.printf("Total score is %1d\n", totalScore);
@@ -65,9 +58,8 @@ public class Puzzle02 {
         );
 
         var totalScore = lines.stream()
-                .map(it -> it.split(" "))
-                .map(it -> new Game(it[0], it[1]))
-                .mapToInt(it -> gameMap.get(it.second()).score + shapeMap.get(it).score)
+                .map(Game::fromString)
+                .mapToInt(it -> gameMap.get(it.ownMove()).score + shapeMap.get(it).score)
                 .sum();
 
         System.out.printf("Total score is %1d\n", totalScore);
@@ -82,7 +74,6 @@ public class Puzzle02 {
         Shape(int score) {
             this.score = score;
         }
-
     }
 
     private enum Outcome {
@@ -94,17 +85,17 @@ public class Puzzle02 {
         Outcome(int score) {
             this.score = score;
         }
-
     }
 
-    private record Game(String first, String second) {
+    private record Game(String opponentMove, String ownMove) {
+
+        public static Game fromString(String gameDefinition) {
+            var moves = gameDefinition.split(" ");
+            return new Game(moves[0], moves[1]);
+        }
     }
 
     public static void main(String[] args) {
-        try {
-            new Puzzle02().run();
-        } catch (URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        new Puzzle02().run();
     }
 }

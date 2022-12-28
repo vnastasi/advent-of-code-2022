@@ -1,47 +1,54 @@
 package md.vnastasi.aoc;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.interfaces.ECKey;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Puzzle01 {
 
-    public static void main(String[] args) {
-        run();
+    public void run() {
+        var lines = Inputs.readLines("input_01.txt");
+        var map = createMap(lines);
+        partOne(map);
+        partTwo(map);
     }
 
-    private static void run() {
-        var scanner = new Scanner(Puzzle01.class.getClassLoader().getResourceAsStream("input_01.txt"));
-
-        var currentElfNumber = 1;
+    private Map<Integer, Long> createMap(List<String> lines) {
+        var currentElfNumber = new AtomicInteger(1);
         var map = new HashMap<Integer, Long>();
-        map.put(currentElfNumber, 0L);
+        map.put(currentElfNumber.get(), 0L);
 
-        while (scanner.hasNextLine()) {
-            var line = scanner.nextLine();
+        lines.forEach(line -> {
             if (line.isEmpty()) {
-                currentElfNumber++;
-                map.put(currentElfNumber, 0L);
-                continue;
+                map.put(currentElfNumber.incrementAndGet(), 0L);
+            } else {
+                map.computeIfPresent(currentElfNumber.get(), (key, oldValue) -> oldValue + Long.parseLong(line));
             }
+        });
 
-            var caloriesValue = Long.parseLong(line);
-            map.computeIfPresent(currentElfNumber, (key, oldValue) -> oldValue + caloriesValue);
-        }
+        return map;
+    }
 
+    private void partOne(Map<Integer, Long> map) {
         var topElf = map.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .orElseThrow();
-        System.out.printf("Elf #%1d is carrying %2d calories\n", topElf.getKey(), topElf.getValue());
 
+        System.out.printf("Elf #%1d is carrying %2d calories\n", topElf.getKey(), topElf.getValue());
+    }
+
+    private void partTwo(Map<Integer, Long> map) {
         var top3TotalCalories = map.entrySet().stream()
                 .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
                 .limit(3L)
                 .mapToLong(Map.Entry::getValue)
                 .sum();
-        System.out.printf("Top 3 elf are carrying a total of %1d calories\n", top3TotalCalories);
+
+        System.out.printf("Top 3 elves are carrying a total of %1d calories\n", top3TotalCalories);
+    }
+
+    public static void main(String[] args) {
+        new Puzzle01().run();
     }
 }

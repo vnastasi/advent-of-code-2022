@@ -7,6 +7,7 @@ public class Puzzle04 {
     public void run() {
         var lines = Inputs.readLines("input_04.txt");
         partOne(lines);
+        partTwo(lines);
     }
 
     private void partOne(List<String> lines) {
@@ -17,10 +18,22 @@ public class Puzzle04 {
         System.out.printf("There are %1d full overlapping pairs\n", count);
     }
 
+    private void partTwo(List<String> lines) {
+        long count = lines.stream()
+                .map(RangePair::fromString)
+                .filter(RangePair::partiallyOverlap)
+                .count();
+        System.out.printf("There are %1d any overlapping pairs\n", count);
+    }
+
     private record RangePair(Range one, Range two) {
 
         public boolean fullyOverlap() {
             return one.contains(two) || two.contains(one);
+        }
+
+        public boolean partiallyOverlap() {
+            return one.overlapsWith(two) || two.overlapsWith(one);
         }
 
         public static RangePair fromString(String rangePairDefinition) {
@@ -33,6 +46,10 @@ public class Puzzle04 {
 
         public boolean contains(Range other) {
             return other.start >= start && other.end <= end;
+        }
+
+        public boolean overlapsWith(Range other) {
+            return other.start >= start && other.start <= end;
         }
 
         public static Range fromString(String stringDefinition) {

@@ -21,4 +21,13 @@ public class Inputs {
             throw new RuntimeException(e);
         }
     }
+
+    public static String readString(String fileName) {
+        URL resource = Inputs.class.getClassLoader().getResource(fileName);
+        try {
+            return Files.readString(Path.of(Objects.requireNonNull(resource).toURI()));
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

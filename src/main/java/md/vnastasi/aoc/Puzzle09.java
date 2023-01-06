@@ -45,9 +45,9 @@ public class Puzzle09 {
     }
 
     private Position computeNewPosition(Position frontKnotPosition, Position currentKnotPosition) {
-        var distance = sqrt(pow(frontKnotPosition.x - currentKnotPosition.x, 2) + pow(frontKnotPosition.y - currentKnotPosition.y, 2));
         var dx = frontKnotPosition.x - currentKnotPosition.x;
         var dy = frontKnotPosition.y - currentKnotPosition.y;
+        var distance = sqrt(pow(dx, 2) + pow(dy, 2));
         var moveX = 0;
         var moveY = 0;
 

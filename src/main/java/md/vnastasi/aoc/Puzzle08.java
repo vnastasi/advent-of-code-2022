@@ -97,10 +97,10 @@ public class Puzzle08 {
         return grid;
     }
 
+    record Point(int i, int j, int value) {
+    }
+
     public static void main(String[] args) {
         new Puzzle08().run();
     }
-}
-
-record Point(int i, int j, int value) {
 }

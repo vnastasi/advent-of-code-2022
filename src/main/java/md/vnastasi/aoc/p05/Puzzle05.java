@@ -1,13 +1,14 @@
-package md.vnastasi.aoc;
+package md.vnastasi.aoc.p05;
+
+import md.vnastasi.aoc.util.Inputs;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static md.vnastasi.aoc.Collections.toReversedList;
+import static md.vnastasi.aoc.util.Collections.toReversedList;
 
 public class Puzzle05 {
 
@@ -20,9 +21,9 @@ public class Puzzle05 {
 
     private void partOne(List<Deque<String>> stacks, List<Instruction> instructions) {
         instructions.forEach(instruction -> {
-            var fromStack = stacks.get(instruction.fromStack - 1);
-            var toStack = stacks.get(instruction.toStack - 1);
-            IntStream.range(0, instruction.quantity)
+            var fromStack = stacks.get(instruction.fromStack() - 1);
+            var toStack = stacks.get(instruction.toStack() - 1);
+            IntStream.range(0, instruction.quantity())
                     .forEach(i -> toStack.push(fromStack.pop()));
         });
 
@@ -32,9 +33,9 @@ public class Puzzle05 {
 
     private void partTwo(List<Deque<String>> stacks, List<Instruction> instructions) {
         instructions.forEach(instruction -> {
-            var fromStack = stacks.get(instruction.fromStack - 1);
-            var toStack = stacks.get(instruction.toStack - 1);
-            IntStream.range(0, instruction.quantity)
+            var fromStack = stacks.get(instruction.fromStack() - 1);
+            var toStack = stacks.get(instruction.toStack() - 1);
+            IntStream.range(0, instruction.quantity())
                     .mapToObj(i -> fromStack.pop())
                     .collect(toReversedList())
                     .forEach(toStack::push);
@@ -56,22 +57,6 @@ public class Puzzle05 {
                 new ArrayDeque<>(List.of("W", "H", "Q", "S", "J", "N")),
                 new ArrayDeque<>(List.of("V", "L", "S", "F", "Q", "C", "R"))
         );
-    }
-
-    private record Instruction(int quantity, int fromStack, int toStack) {
-
-        private static final Pattern PATTERN = Pattern.compile("\\d+");
-
-        public static Instruction fromLine(String line) {
-            var matcher = PATTERN.matcher(line);
-            matcher.find();
-            var quantity = Integer.parseInt(matcher.group());
-            matcher.find();
-            var fromStack = Integer.parseInt(matcher.group());
-            matcher.find();
-            var toStack = Integer.parseInt(matcher.group());
-            return new Instruction(quantity, fromStack, toStack);
-        }
     }
 
     public static void main(String[] args) {

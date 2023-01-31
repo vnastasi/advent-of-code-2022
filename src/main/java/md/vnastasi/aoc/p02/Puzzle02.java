@@ -1,4 +1,6 @@
-package md.vnastasi.aoc;
+package md.vnastasi.aoc.p02;
+
+import md.vnastasi.aoc.util.Inputs;
 
 import java.util.List;
 import java.util.Map;
@@ -63,36 +65,6 @@ public class Puzzle02 {
                 .sum();
 
         System.out.printf("Total score is %1d\n", totalScore);
-    }
-
-    private enum Shape {
-
-        ROCK(1), PAPER(2), SCISSORS(3);
-
-        public final int score;
-
-        Shape(int score) {
-            this.score = score;
-        }
-    }
-
-    private enum Outcome {
-
-        WIN(6), DRAW(3), LOSE(0);
-
-        public final int score;
-
-        Outcome(int score) {
-            this.score = score;
-        }
-    }
-
-    private record Game(String opponentMove, String ownMove) {
-
-        public static Game fromString(String gameDefinition) {
-            var moves = gameDefinition.split(" ");
-            return new Game(moves[0], moves[1]);
-        }
     }
 
     public static void main(String[] args) {

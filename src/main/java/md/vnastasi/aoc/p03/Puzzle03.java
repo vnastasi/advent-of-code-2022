@@ -1,4 +1,6 @@
-package md.vnastasi.aoc;
+package md.vnastasi.aoc.p03;
+
+import md.vnastasi.aoc.util.Inputs;
 
 import java.util.List;
 import java.util.Objects;

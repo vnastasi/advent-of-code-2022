@@ -1,4 +1,4 @@
-package md.vnastasi.aoc;
+package md.vnastasi.aoc.util;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

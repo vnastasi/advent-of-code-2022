@@ -1,4 +1,6 @@
-package md.vnastasi.aoc;
+package md.vnastasi.aoc.p08;
+
+import md.vnastasi.aoc.util.Inputs;
 
 import java.util.Arrays;
 import java.util.List;
@@ -95,9 +97,6 @@ public class Puzzle08 {
             }
         }
         return grid;
-    }
-
-    record Point(int i, int j, int value) {
     }
 
     public static void main(String[] args) {

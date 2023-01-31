@@ -1,4 +1,6 @@
-package md.vnastasi.aoc;
+package md.vnastasi.aoc.p01;
+
+import md.vnastasi.aoc.util.Inputs;
 
 import java.util.HashMap;
 import java.util.List;

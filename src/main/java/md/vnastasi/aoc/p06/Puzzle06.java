@@ -1,4 +1,6 @@
-package md.vnastasi.aoc;
+package md.vnastasi.aoc.p06;
+
+import md.vnastasi.aoc.util.Inputs;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

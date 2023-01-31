@@ -1,4 +1,4 @@
-package md.vnastasi.aoc;
+package md.vnastasi.aoc.util;
 
 import java.util.List;
 import java.util.stream.Collector;
